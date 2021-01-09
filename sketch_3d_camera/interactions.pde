@@ -3,6 +3,7 @@ void keyPressed() {
   if (key == 'a' || key == 'A') akey = true;
   if (key == 's' || key == 'S') skey = true;
   if (key == 'd' || key == 'D') dkey = true;
+  if (key == ' ') spacekey = true;
 }
 
 
@@ -11,4 +12,5 @@ void keyReleased() {
   if (key == 'a' || key == 'A') akey = false;
   if (key == 's' || key == 'S') skey = false;
   if (key == 'd' || key == 'D') dkey = false;
+    if (key == ' ') spacekey = false;
 }

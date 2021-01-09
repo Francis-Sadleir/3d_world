@@ -5,15 +5,18 @@ Robot rbt;
 //camera variables
 float eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz;
 
-boolean wkey, akey, skey, dkey;
+boolean wkey, akey, skey, dkey, spacekey;
 
 float leftRightAngle;
 float upDownAngle;
 
+float textAngle = 0;
+ArrayList<Snowflake> snowList;
 
 
 void setup() {
   noCursor();
+  textAlign(CENTER, CENTER);
   try {
     rbt = new Robot();
   }
@@ -37,6 +40,13 @@ void setup() {
   upx = 0;
   upy = 1;
   upz = 0;
+  snowList = new ArrayList<Snowflake>();
+
+  int i = 0;
+  while (i < 100) {
+    snowList.add( new Snowflake() );
+    i = i + 1;
+  }
 }
 
 
@@ -46,24 +56,46 @@ void draw() {
   camera(eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz);
 
   move();
-  drawAxis();
-  drawFloor(-2000, 2000, height, 100);
-  drawFloor(-2000, 2000, 0, 100);
-  drawInterface();
+  //drawAxis();
+  drawFloor(-4000, 4000, height, 100);
+  drawFloor(-4000, 4000, 0, 100);
+
+  //drawInterface();
+  drawText();
+
+  drawSnow();
 }
 
-void drawInterface() {
+/*void drawInterface() {
+ pushMatrix();
+ stroke(255, 0, 0);
+ strokeWeight(5);
+ line(width/2-15, height/2, width/2+15, height/2);
+ line(width/2, height/2-15, width/2, height/2+15);
+ popMatrix();
+ }*/
+
+void drawText() {
   pushMatrix();
-  stroke(255, 0, 0);
-  strokeWeight(5);
-  line(width/2-15, height/2, width/2+15, height/2);
-  line(width/2, height/2-15, width/2, height/2+15);
+  rotateY(textAngle);
+  textSize(250);
+  fill(random(100, 200), random(100, 200), random(100, 200));
+  text("FRANCIS LAND", 0, 200);
+  popMatrix();
+  textAngle += 0.01;
+
+  pushMatrix();
+  fill(random(100, 200));
+  strokeWeight(4);
+  translate(0, -1000, 0);
+  sphere(300);
   popMatrix();
 }
 
 void move() {
-
   pushMatrix();
+  fill(255, 0, 0);
+  noStroke();
   translate(focusx, focusy, focusz);
   sphere(1);
   popMatrix();
@@ -87,7 +119,7 @@ void move() {
     eyex -= cos(leftRightAngle)* 10;
     eyez -= sin(leftRightAngle)* 10;
   }
-
+  if (spacekey)eyey += tan(upDownAngle)*10;
 
   focusx = eyex + cos(leftRightAngle)*300;
   focusy = eyey + tan(upDownAngle)*300;
@@ -104,23 +136,35 @@ void move() {
   //upDownAngle = upDownAngle-0.01;
 }
 
-void drawAxis() {
-  stroke(255, 0, 0);
-  strokeWeight(3);
-  line(0, 0, 0, 1000, 0, 0);
-  line(0, 0, 0, 0, 1000, 0);
-  line(0, 0, 0, 0, 0, 1000);
+void drawSnow() {
+  int i = 0;
+  while (i < 100) {
+    Snowflake mySnowflake = snowList.get(i);
+    mySnowflake.act();
+    mySnowflake.show();
+    i = i + 1;
+  }
 }
-
+/*void drawAxis() {
+ stroke(255, 0, 0);
+ strokeWeight(3);
+ line(0, 0, 0, 1000, 0, 0);
+ line(0, 0, 0, 0, 1000, 0);
+ line(0, 0, 0, 0, 0, 1000);
+ }
+ */
 
 void drawFloor(int floorStart, int floorEnd, int floorHeight, int floorSpacing) {
 
-  stroke(255);
+
   strokeWeight(2);
   int x = floorStart;
   int z = floorStart;
   while (x < floorEnd) {
+    //strokeWeight(5);
+    stroke(random(255), random(255), random(255), random(255));
     line (x, floorHeight, floorEnd, x, floorHeight, floorStart);
+    stroke(random(255), random(255));
     line (floorStart, floorHeight, z, floorEnd, floorHeight, z);
     x = x + floorSpacing;
     z = z + floorSpacing;
