@@ -1,7 +1,8 @@
 import java.awt.Robot;
 
-color black = #000000;
-color white = #FFFFFF;
+color black = #000000;    //oakPlanks
+color white = #FFFFFF;    //empty
+color dullBlue = #7092BE; //mpssyBrick
 
 int gridSize;
 
@@ -39,7 +40,7 @@ void setup() {
   size(displayWidth, displayHeight, P3D);
 
   eyex = width/2;
-  eyey = height/2;
+  eyey = 9*height/10;
   eyez = height/2;
 
   focusx = width/2;
@@ -51,19 +52,27 @@ void setup() {
   upz = 0;
 
   map = loadImage("map.png");
+
+  mossyStone = loadImage("Mossy_Stone_Bricks.png");
+
+  oakPlanks = loadImage("Oak_Planks.png");
+
+  textureMode(NORMAL);
+
   gridSize = 100;
 }
 
 
 void draw() {
   background(0);
+  pointLight(255, 255, 255, eyex, eyey, eyez); 
 
   camera(eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz);
 
   move();
   //drawAxis();
   drawFloor(-2000, 2000, height, 100);
-  drawFloor(-2000, 2000, 0, 100);
+  drawFloor(-2000, 2000, height-gridSize*4, 100);
   drawMap();
   //drawInterface();
 }
@@ -74,13 +83,15 @@ void drawMap() {
   for (int x = 0; x < map.width; x++) {
     for (int y = 0; y < map.height; y++) {
       color c = map.get(x, y);
-      if (c!= white) {
-        pushMatrix();
-        fill(c);
-        stroke(100);
-        translate(x*gridSize-2000, height/2, y*gridSize-2000);
-        box(gridSize, height, gridSize);
-        popMatrix();
+      if (c == dullBlue) {
+        texturedCube(x*gridSize-2000, height-gridSize, y*gridSize-2000, mossyStone, gridSize);
+        texturedCube(x*gridSize-2000, height-gridSize*2, y*gridSize-2000, mossyStone, gridSize);
+        texturedCube(x*gridSize-2000, height-gridSize*3, y*gridSize-2000, mossyStone, gridSize);
+      }
+      if (c == black) {
+        texturedCube(x*gridSize-2000, height-gridSize, y*gridSize-2000, oakPlanks, gridSize);
+        texturedCube(x*gridSize-2000, height-gridSize*2, y*gridSize-2000, oakPlanks, gridSize);
+        texturedCube(x*gridSize-2000, height-gridSize*3, y*gridSize-2000, oakPlanks, gridSize);
       }
     }
   }
@@ -153,19 +164,17 @@ void move() {
 
 void drawFloor(int floorStart, int floorEnd, int floorHeight, int floorSpacing) {
 
-
   strokeWeight(2);
   stroke(255);
 
   int x = floorStart;
   int z = floorStart;
-  while (x < floorEnd) {
-    //strokeWeight(5);
-    //stroke(random(255), random(255), random(255), random(255));
-    line (x, floorHeight, floorEnd, x, floorHeight, floorStart);
-    //stroke(random(255), random(255));
-    line (floorStart, floorHeight, z, floorEnd, floorHeight, z);
+  while (z < floorEnd) {
+    texturedCube(x, floorHeight, z, oakPlanks, floorSpacing);
     x = x + floorSpacing;
-    z = z + floorSpacing;
+    if (x >= floorEnd) {
+      x = floorStart;
+      z = z + floorSpacing;
+    }
   }
 }
