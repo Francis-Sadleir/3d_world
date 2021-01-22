@@ -65,6 +65,7 @@ void setup() {
 
 void draw() {
   background(0);
+  //background(random(0,255),random(0,255),random(0,255),random(0,255));
   pointLight(255, 255, 255, eyex, eyey, eyez); 
 
   camera(eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz);
@@ -128,15 +129,15 @@ void move() {
     eyez += sin(leftRightAngle + radians(90))* 10;
   }
 
-  if (wkey) {
+  if (wkey && canMoveForward()) {
     eyex += cos(leftRightAngle)* 10;
     eyez += sin(leftRightAngle)* 10;
   }
-  if (skey) {
+  if (skey && canMoveBack()) {
     eyex -= cos(leftRightAngle)* 10;
     eyez -= sin(leftRightAngle)* 10;
   }
-  if (spacekey)eyey += tan(upDownAngle)*10;
+  //if (spacekey)eyey += tan(upDownAngle)*10;
 
   focusx = eyex + cos(leftRightAngle)*300;
   focusy = eyey + tan(upDownAngle)*300;
@@ -151,6 +152,49 @@ void move() {
   if (mouseX > width-2) rbt.mouseMove(3, mouseY);
   if (mouseX < 2) rbt.mouseMove(width-3, mouseY);
   //upDownAngle = upDownAngle-0.01;
+}
+
+
+boolean canMoveForward() {
+
+  float fwdx, fwdy, fwdz;
+  int mapx, mapy;
+
+
+  fwdx = eyex + cos(leftRightAngle)*120;
+  fwdy = eyey;
+  fwdz = eyez + sin(leftRightAngle)*120;
+
+  mapx = int(fwdx+2000) / gridSize;
+  mapy = int(fwdz+2000) / gridSize;
+
+  if (map.get(mapx, mapy) == white) {
+    return true;
+  } else {
+
+    return false;
+  }
+}
+
+boolean canMoveBack() {
+
+  float fwdx, fwdy, fwdz;
+  int mapx, mapy;
+
+
+  fwdx = eyex + cos(leftRightAngle)*120;
+  fwdy = eyey;
+  fwdz = eyez + sin(leftRightAngle)*120;
+
+  mapx = int(fwdx-2000) / gridSize;
+  mapy = int(fwdz-2000) / gridSize;
+
+  if (map.get(mapx, mapy) == white) {
+    return true;
+  } else {
+
+    return false;
+  }
 }
 
 /*void drawAxis() {
