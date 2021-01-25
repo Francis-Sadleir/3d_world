@@ -120,11 +120,11 @@ void move() {
 
 
 
-  if (akey) {
+  if (akey && canMoveRight()) {
     eyex += cos(leftRightAngle - radians(90))* 10;
     eyez += sin(leftRightAngle - radians(90))* 10;
   }
-  if (dkey) {
+  if (dkey && canMoveLeft()) {
     eyex += cos(leftRightAngle + radians(90))* 10;
     eyez += sin(leftRightAngle + radians(90))* 10;
   }
@@ -161,9 +161,48 @@ boolean canMoveForward() {
   int mapx, mapy;
 
 
-  fwdx = eyex + cos(leftRightAngle)*120;
+  fwdx = eyex + cos(leftRightAngle)*150;
   fwdy = eyey;
-  fwdz = eyez + sin(leftRightAngle)*120;
+  fwdz = eyez + sin(leftRightAngle)*150;
+
+  mapx = int(fwdx+2000) / gridSize;
+  mapy = int(fwdz+2000) / gridSize;
+
+  if (map.get(mapx, mapy) == white) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+boolean canMoveBack() {
+
+  float bkwx, bkwy, bkwz;
+  int mapx, mapy;
+
+
+  bkwx = eyex - cos(leftRightAngle)*150;
+  bkwy = eyey;
+  bkwz = eyez - sin(leftRightAngle)*150;
+
+  mapx = int(bkwx+2000) / gridSize;
+  mapy = int(bkwz+2000) / gridSize;
+
+  if (map.get(mapx, mapy) == white) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+boolean canMoveRight() {
+  float fwdx, fwdy, fwdz;
+  int mapx, mapy;
+
+
+  fwdx = eyex + cos(leftRightAngle - radians(90))* 150;
+  fwdy = eyey;
+  fwdz = eyez + sin(leftRightAngle - radians(90))* 150;
 
   mapx = int(fwdx+2000) / gridSize;
   mapy = int(fwdz+2000) / gridSize;
@@ -176,18 +215,17 @@ boolean canMoveForward() {
   }
 }
 
-boolean canMoveBack() {
-
+boolean canMoveLeft() {
   float fwdx, fwdy, fwdz;
   int mapx, mapy;
 
 
-  fwdx = eyex + cos(leftRightAngle)*120;
+  fwdx = eyex + cos(leftRightAngle + radians(90))* 150;
   fwdy = eyey;
-  fwdz = eyez + sin(leftRightAngle)*120;
+  fwdz = eyez + sin(leftRightAngle + radians(90))* 150;
 
-  mapx = int(fwdx-2000) / gridSize;
-  mapy = int(fwdz-2000) / gridSize;
+  mapx = int(fwdx+2000) / gridSize;
+  mapy = int(fwdz+2000) / gridSize;
 
   if (map.get(mapx, mapy) == white) {
     return true;
@@ -196,7 +234,6 @@ boolean canMoveBack() {
     return false;
   }
 }
-
 /*void drawAxis() {
  stroke(255, 0, 0);
  strokeWeight(3);
