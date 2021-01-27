@@ -7,7 +7,6 @@ void move() {
   popMatrix();
 
 
-
   if (akey && canMoveRight()) {
     eyex += cos(leftRightAngle - radians(90))* 10;
     eyez += sin(leftRightAngle - radians(90))* 10;
@@ -25,7 +24,7 @@ void move() {
     eyex -= cos(leftRightAngle)* 10;
     eyez -= sin(leftRightAngle)* 10;
   }
-  //if (spacekey)eyey += tan(upDownAngle)*10;
+     if (spacekey) objects.add(new Bullet());
 
   focusx = eyex + cos(leftRightAngle)*300;
   focusy = eyey + tan(upDownAngle)*300;

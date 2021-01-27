@@ -22,9 +22,13 @@ float upDownAngle;
 
 float textAngle = 0;
 
+ArrayList<GameObject> objects;
 
 
 void setup() {
+
+  objects = new ArrayList<GameObject>();
+
   noCursor();
   textAlign(CENTER, CENTER);
   try {
@@ -76,4 +80,17 @@ void draw() {
   drawFloor(-2000, 2000, height-gridSize*4, 100);
   drawMap();
   //drawInterface();
+
+
+  int i = 0;
+  while (i < objects.size()) {
+    GameObject obj = objects.get(i);
+    obj.act();
+    obj.show();
+    if (obj.lives == 0) {
+      objects.remove(i);
+    } else {
+      i++;
+    }
+  }
 }
