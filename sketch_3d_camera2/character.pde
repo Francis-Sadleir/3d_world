@@ -24,7 +24,7 @@ void move() {
     eyex -= cos(leftRightAngle)* 10;
     eyez -= sin(leftRightAngle)* 10;
   }
-     if (spacekey) objects.add(new Bullet());
+  if (spacekey) objects.add(new Bullet());
 
   focusx = eyex + cos(leftRightAngle)*300;
   focusy = eyey + tan(upDownAngle)*300;

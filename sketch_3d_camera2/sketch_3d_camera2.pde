@@ -3,6 +3,7 @@ import java.awt.Robot;
 color black = #000000;    //oakPlanks
 color white = #FFFFFF;    //empty
 color dullBlue = #7092BE; //mpssyBrick
+color red, blue, yellow, grey;
 
 int gridSize;
 
@@ -28,7 +29,6 @@ ArrayList<GameObject> objects;
 void setup() {
 
   objects = new ArrayList<GameObject>();
-
   noCursor();
   textAlign(CENTER, CENTER);
   try {
@@ -64,6 +64,8 @@ void setup() {
   textureMode(NORMAL);
 
   gridSize = 100;
+  
+  objects.add(new Target());
 }
 
 
