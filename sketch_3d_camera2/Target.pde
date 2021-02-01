@@ -20,36 +20,36 @@ class Target extends GameObject {
 
   void show() {//float x, float y, float z, float s) {
 
-    pushMatrix();
+     world.pushMatrix();
 
-    fill(grey);
-    strokeWeight(5);
-    stroke(grey);
+     world.fill(grey);
+     world.strokeWeight(5);
+     world.stroke(grey);
 
-    translate(x, y, z);
+     world.translate(x, y, z);
 
     //outer white layer
-    ellipse(0, 0, s*7, s*7);
-    stroke(0);
+     world.ellipse(0, 0, s*7, s*7);
+     world.stroke(0);
 
     //red layer
-    fill(red);
-    ellipse(0, 0, s*7/6, s*7/6);
-    ellipse(0, 0, s*7/5, s*7/5);
+     world.fill(red);
+     world.ellipse(0, 0, s*7/6, s*7/6);
+     world.ellipse(0, 0, s*7/5, s*7/5);
 
     //blue layer
-    fill(blue);
-    ellipse(0, 0, s*7/4, s*7/4);
-    ellipse(0, 0, s*7/3, s*7/3);
+     world.fill(blue);
+     world.ellipse(0, 0, s*7/4, s*7/4);
+     world.ellipse(0, 0, s*7/3, s*7/3);
 
     //yellow layer
-    fill(yellow);
-    ellipse(0, 0, s*7/2, s*7/2);
+     world.fill(yellow);
+     world.ellipse(0, 0, s*7/2, s*7/2);
 
     //bullseye
-    fill(black);
-    ellipse(0, 0, s*7/0.1, s*7/0.1);
+     world.fill(black);
+     world.ellipse(0, 0, s*7/0.1, s*7/0.1);
 
-    popMatrix();
+     world.popMatrix();
   }
 }

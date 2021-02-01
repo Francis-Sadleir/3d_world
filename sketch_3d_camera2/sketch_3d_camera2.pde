@@ -25,12 +25,19 @@ float textAngle = 0;
 
 ArrayList<GameObject> objects;
 
+PGraphics world;
+PGraphics HUD;
 
 void setup() {
+
+  world = createGraphics(width, height, P3D);
+  HUD = createGraphics(width, height, P2D);
 
   objects = new ArrayList<GameObject>();
   noCursor();
   textAlign(CENTER, CENTER);
+
+
   try {
     rbt = new Robot();
   }
@@ -41,7 +48,7 @@ void setup() {
   leftRightAngle = 0;
   upDownAngle = 0;
 
-  size(displayWidth, displayHeight, P3D);
+  size(displayWidth, displayHeight, P2D);
 
   eyex = width/2;
   eyey = 9*height/10;
@@ -61,20 +68,24 @@ void setup() {
 
   oakPlanks = loadImage("Oak_Planks.png");
 
-  textureMode(NORMAL);
+
 
   gridSize = 100;
-  
+
   objects.add(new Target());
 }
 
 
 void draw() {
-  background(0);
-  //background(random(0,255),random(0,255),random(0,255),random(0,255));
-  pointLight(255, 255, 255, eyex, eyey, eyez); 
+  world.beginDraw();
 
-  camera(eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz);
+  world.textureMode(NORMAL);
+
+  world.background(0);
+  //background(random(0,255),random(0,255),random(0,255),random(0,255));
+  world.pointLight(255, 255, 255, eyex, eyey, eyez); 
+
+  world.camera(eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz);
 
   move();
   //drawAxis();
@@ -95,4 +106,16 @@ void draw() {
       i++;
     }
   }
+  world.endDraw();
+  image(world, 0, 0);
+
+  HUD.beginDraw();
+  HUD.clear();
+  drawCrosshair();
+  drawMinimap();
+
+  HUD.endDraw();
+
+
+  image(HUD, 0, 0);
 }
