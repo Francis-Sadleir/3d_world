@@ -9,7 +9,7 @@ class Particle extends GameObject {
     loc = location.copy();
     velocity = new PVector(random(-10, 10), random(-10, 10), random(-10, 10));
     alpha = 255;
-    speed = 3;
+    speed = 5;
     velocity.setMag(speed);
     size = random(2, 5);
   }
