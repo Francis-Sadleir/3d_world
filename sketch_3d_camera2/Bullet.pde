@@ -18,7 +18,7 @@ class Bullet extends GameObject {
 
   void act() {
 
-    
+
     if (loc.y >= height) {
       lives = 0;
 

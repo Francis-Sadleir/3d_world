@@ -5,6 +5,14 @@ color white = #FFFFFF;    //empty
 color dullBlue = #7092BE; //mpssyBrick
 color red, blue, yellow, grey;
 
+
+int mode;
+
+final int INTRO = 1;
+final int GAME = 2;
+final int PAUSE = 3;
+final int GAMEOVER = 4;
+
 int gridSize;
 
 PImage map;
@@ -29,6 +37,8 @@ PGraphics world;
 PGraphics HUD;
 
 void setup() {
+  mode = GAME;
+
 
   world = createGraphics(width, height, P3D);
   HUD = createGraphics(width, height, P2D);
@@ -73,6 +83,12 @@ void setup() {
   gridSize = 100;
 
   objects.add(new Target());
+
+  int i = 0;
+  while (i < 100) {
+    objects.add(new Snow());
+    i = i + 1;
+  }
 }
 
 
@@ -94,6 +110,18 @@ void draw() {
   drawMap();
   //drawInterface();
 
+  if (mode == INTRO) {
+    intro();
+  } else if (mode == GAME) {
+    game();
+  } else if (mode == PAUSE) {
+    pause();
+  } else if (mode == GAMEOVER) {
+    gameover();
+  } else {
+    println ("ERROR! Mode is " + mode);
+  }
+
 
   int i = 0;
   while (i < objects.size()) {
@@ -111,8 +139,10 @@ void draw() {
 
   HUD.beginDraw();
   HUD.clear();
+
   drawCrosshair();
   drawMinimap();
+  drawEffects();
 
   HUD.endDraw();
 

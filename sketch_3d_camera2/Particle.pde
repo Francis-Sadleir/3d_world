@@ -1,6 +1,5 @@
 class Particle extends GameObject {
 
-
   PVector velocity;
   float speed;
   int alpha;

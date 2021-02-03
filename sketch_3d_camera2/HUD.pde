@@ -1,9 +1,15 @@
+//int timer = 100;
+
 void drawCrosshair() {
 
   HUD.stroke(white);
   HUD.strokeWeight(5);
   HUD.line(width/2-20, height/2, width/2+20, height/2);
   HUD.line(width/2, height/2-20, width/2, height/2+20);
+}
+
+
+void drawEffects() {
 }
 
 
