@@ -24,7 +24,6 @@ void drawMinimap() {
   HUD.textSize(20);
   HUD.text("X: " + miniX, 50, 230);
   HUD.text("Y: " + miniY, 50, 260);
-
   HUD.strokeWeight(1);
   HUD.stroke(255, 0, 0);
   HUD.fill(255, 0, 0);

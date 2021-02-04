@@ -1,27 +1,30 @@
 class Snow extends GameObject {
-  float speed;
-  PVector velocity;
-  
+  float x, y, z, speed;
+
   Snow () {
-    size = random(0.1, 3);
+    size = random(1, 15);
+    x = random(-2000, width+500);
+    y = random(-2000, height);
+    z = random(-2000, width-500);
     speed = size;
     lives = 1;
-    loc = new PVector(random(-2000, 2000), random(-2000, 2000), 100);
-    velocity.setMag(speed);
   }
 
 
 
   void show() {
-    popMatrix();
+    world.pushMatrix();
     world.fill(white);
     world.noStroke();
-    world.translate(loc.x, loc.y, loc.z);
+    world.translate(x, y, z);
     world.box(size);
-    pushMatrix();
+    world.popMatrix();
   }
 
   void act() {
-    loc.add(velocity);
+    y = y + speed;
+    if (y > height) {
+      y = 0;
+    }
   }
 }

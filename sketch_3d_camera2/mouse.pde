@@ -10,7 +10,4 @@ void mouseReleased() {
   } else {
     println ("ERROR! Mode is " + mode);
   }
-
-
-
 }

@@ -1,3 +1,20 @@
+/*
+Francis Sadleir Programming 12
+
+Controls: WASD to move. P to pause in game.
+
+
+Hello Mr. Pelletier, thanks so much for a super fun quarter! It makes me so sad that we couldn't have a normal year, but this was an excellent experience none the less.
+I was unable to get my target to move around when it gets hit, as I ran out of time. I just really struggled with time management this quarter. If I had more time I would 
+make it so that my target moves when it gets hit and in general I feel I would've been more creative with this project. Anyways thanks so much for everything and I'll see you around!
+
+-Francis
+*/
+
+
+
+
+
 import java.awt.Robot;
 
 color black = #000000;    //oakPlanks
@@ -21,10 +38,12 @@ PImage oakPlanks;
 
 Robot rbt;
 
+Target target;
+
 //camera variables
 float eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz;
 
-boolean wkey, akey, skey, dkey, spacekey;
+boolean wkey, akey, skey, dkey, pkey, spacekey;
 
 float leftRightAngle;
 float upDownAngle;
@@ -33,11 +52,13 @@ float textAngle = 0;
 
 ArrayList<GameObject> objects;
 
+
 PGraphics world;
 PGraphics HUD;
 
+
 void setup() {
-  mode = GAME;
+  mode = INTRO;
 
 
   world = createGraphics(width, height, P3D);
@@ -77,38 +98,22 @@ void setup() {
   mossyStone = loadImage("Mossy_Stone_Bricks.png");
 
   oakPlanks = loadImage("Oak_Planks.png");
-
-
-
-  gridSize = 100;
-
-  objects.add(new Target());
-
+  
   int i = 0;
   while (i < 100) {
     objects.add(new Snow());
-    i = i + 1;
+    i++;
   }
+
+  gridSize = 100;
+  
+  objects.add (new Target()); 
+ 
+  target = new Target();
 }
 
 
 void draw() {
-  world.beginDraw();
-
-  world.textureMode(NORMAL);
-
-  world.background(0);
-  //background(random(0,255),random(0,255),random(0,255),random(0,255));
-  world.pointLight(255, 255, 255, eyex, eyey, eyez); 
-
-  world.camera(eyex, eyey, eyez, focusx, focusy, focusz, upx, upy, upz);
-
-  move();
-  //drawAxis();
-  drawFloor(-2000, 2000, height, 100);
-  drawFloor(-2000, 2000, height-gridSize*4, 100);
-  drawMap();
-  //drawInterface();
 
   if (mode == INTRO) {
     intro();
@@ -122,30 +127,8 @@ void draw() {
     println ("ERROR! Mode is " + mode);
   }
 
+  
 
-  int i = 0;
-  while (i < objects.size()) {
-    GameObject obj = objects.get(i);
-    obj.act();
-    obj.show();
-    if (obj.lives == 0) {
-      objects.remove(i);
-    } else {
-      i++;
-    }
-  }
-  world.endDraw();
-  image(world, 0, 0);
-
-  HUD.beginDraw();
-  HUD.clear();
-
-  drawCrosshair();
-  drawMinimap();
-  drawEffects();
-
-  HUD.endDraw();
-
-
-  image(HUD, 0, 0);
+  
+  
 }

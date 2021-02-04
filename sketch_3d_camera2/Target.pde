@@ -67,10 +67,14 @@ class Target extends GameObject {
     world.popMatrix();
   }
 
+  void isHit() {
+    //score++
+    x = random(-2000+200, 2000-200);
+    y = 780;
+    z = 0;
+    s = random(100, 200);
+  }
+
   void act() {
-
-    //if (Bullet.loc.x >= Target.loc.x) {
-
-    //}
   }
 }
